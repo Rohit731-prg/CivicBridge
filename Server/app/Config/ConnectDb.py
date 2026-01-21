@@ -8,3 +8,5 @@ db = client["clearday"]
 
 collection_user = db["users"]
 collection_location = db["locations"]
+collection_complain = db["complains"]
+collection_emergency = db["emergency"]

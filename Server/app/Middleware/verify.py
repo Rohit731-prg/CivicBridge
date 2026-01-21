@@ -21,8 +21,6 @@ async def verify(request: Request) -> dict:
                 detail="Invalid authentication scheme"
             )
 
-
-        
         payload = jwt.decode(token, setting.SERECT_KEY, algorithms=["HS256"])
         data = payload.get("sub")
         user = await collection_user.find_one({ "email": data })
