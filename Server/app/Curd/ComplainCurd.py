@@ -1,5 +1,5 @@
 from ast import List
-from app.Database.Model.ComplainModel import ComplainModel
+from app.Database.Model.ComplainModel import ComplainModel, Fetch_request_model
 from fastapi import HTTPException
 from app.Config.ConnectDb import collection_complain
 from datetime import datetime
@@ -58,6 +58,41 @@ async def get_complain_by_user(user_id: str) -> List[Dict[str, Any]]:
         raise HTTPException(status_code=500, detail=str(e))
 
 
+async def get_complain_by_autheruty(data: Fetch_request_model) -> List[Dict[str, Any]]:
+    try:
+        complains = collection_complain.aggregate([
+            {"$match": {
+                
+            }},
+            {"$lookup": {
+                "from": "addresses",
+                "localField": "address_id",
+                "foreignField": "_id",
+                "as": "address_info"
+            }},
+            {"$unwind": "$address_info"},
+            {"$project": {
+                "_id": 1,
+                "user_id": 1,
+                "title": 1,
+                "description": 1,
+                "evidence": 1,
+                "status": 1,
+                "category": 1,
+                "created_at": 1,
+                "updated_at": 1,
+                "address": "$address_info"
+            }}
+        ])
+        complain_list = await complains.to_list()
+        if not complain_list or len(complain_list) == 0:
+            raise HTTPException(status_code=400, detail="No records found on your request..!")
+        
+        return complain_list
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 async def updateStatus(complain_id: str, status: str) -> dict:
     try:
@@ -74,5 +109,3 @@ async def updateStatus(complain_id: str, status: str) -> dict:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-
-
