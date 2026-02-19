@@ -17,7 +17,8 @@ async def request_complain_data(complain: dict) -> dict:
             "status": "pending",
             "created_at": str(datetime.utcnow()),
             "updated_at": str(datetime.utcnow()),
-            "category": complain["category"]
+            "category": complain["category"],
+            "sub_category": complain["sub_category"]
         }
         await collection_complain.insert_one(ComplainModel(**complainDetails))
         return {"message": "Complain data inserted successfully"}
@@ -25,7 +26,6 @@ async def request_complain_data(complain: dict) -> dict:
         raise HTTPException(status_code=500, detail=str(e))
     
 
-    
 async def get_complain_by_user(user_id: str) -> List[Dict[str, Any]]:
     try:
         cursor = collection_complain.aggregate([

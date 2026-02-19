@@ -49,9 +49,14 @@ const style = StyleSheet.create({
         paddingVertical: 30,
     },
     content: {
+        height: 50,
+        width: "100%",
+        backgroundColor: "",
         padding: 5,
         display: "flex",
         flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
     },
     image: {
         width: 80,
