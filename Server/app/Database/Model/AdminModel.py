@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import List, Optional
+from enum import Enum
 
+class Authentication_type(str, Enum):
+    police_station = "police_station"
+    hospital = "hospital"
+    municipality = "municipality"
+    panchayat = "panchayat"
 
 class Jurisdiction(BaseModel):
     state: str = Field(...)
@@ -14,7 +20,7 @@ class Jurisdiction(BaseModel):
 class AdminModel(BaseModel):
     name: str = Field(..., min_length=1)
     employee_ID: str = Field(..., min_length=4)
-    authority_type: str = Field(..., min_length=1)
+    authority_type: Authentication_type = Field(...)
     phone: str = Field(..., min_length=10)
     email: str = Field(...)
     jurisdiction: Jurisdiction   # ✅ Embedded model
