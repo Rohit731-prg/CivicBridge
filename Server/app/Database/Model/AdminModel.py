@@ -14,7 +14,6 @@ class Jurisdiction(BaseModel):
     district: str = Field(...)
     municipality: str = Field(...)
     ward_nos: List[int] = []
-    police_station_code: Optional[str] = None
 
 
 class AdminModel(BaseModel):

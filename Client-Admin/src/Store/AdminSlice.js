@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk } from "./AdminThunk";
+import { loginThunk, registerAdminThunk } from "./AdminThunk";
 
 const initialState = {
     loading: false,
-    admin: null
+    admin: null,
+    employees: null
 };
 
 export const AdminSlice = createSlice({
@@ -23,5 +24,16 @@ export const AdminSlice = createSlice({
                 state.loading = false;
                 state.admin = null;
             })
+
+            .addCase(registerAdminThunk.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(registerAdminThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.employees = action.payload;
+            })
+            .addCase(registerAdminThunk.rejected, (state) => {
+                state.loading = false;
+            });
     }
 })
