@@ -9,3 +9,7 @@ class LocationModel(BaseModel):
     country: str = Field(..., min_length=1)
     latitude: float = Field(...)
     longitude: float = Field(...)
+
+class LocationRequest(BaseModel):
+    latitude: float = Field(...)
+    longitude: float = Field(...)
