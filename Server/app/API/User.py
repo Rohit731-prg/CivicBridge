@@ -16,6 +16,7 @@ async def signUpRoute(
     response: Response,
     name: str = Form(...),
     email: str = Form(...),
+    phone: str = Form(...),
     password: str = Form(...),
     image: UploadFile = Form(...),
     address: str = Form(...)
