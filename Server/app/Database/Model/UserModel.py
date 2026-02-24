@@ -5,6 +5,7 @@ class UserModel(BaseModel):
     name: str = Field(..., min_length=1)
     email: EmailStr
     phone: str = Field(...)
+    # password validation is pending
     password: str = Field(..., min_length=1)
     auth: bool = Field(...)
     otp: str = Field(..., min_length=4)
@@ -25,7 +26,6 @@ class SignupModel(BaseModel):
     email: EmailStr
     phone: str = Field(...)
     password: str = Field(..., min_length=1)
-    image: str = Field(...)
     address: str = Field(..., min_length=1)
 
     @field_validator("phone")
