@@ -6,6 +6,7 @@ from app.Utils.uploadImage import uploadImage
 from app.Curd.UserCurd import signUp, authentication, login
 from app.Database.Model.UserModel import UserModel, SignupModel
 from bson import ObjectId
+from app.Utils.email_service import send_otp_email
 
 router = APIRouter(
     prefix="/api/user",
@@ -57,8 +58,9 @@ async def signUpRoute(
             "image": imageURL["url"],
             "address": signup_data.address
         }
-
         res = await signUp(UserModel(**newUser))
+
+        await send_otp_email(newUser["email"], newUser["otp"])
         response.status_code = 201
         return res
 
